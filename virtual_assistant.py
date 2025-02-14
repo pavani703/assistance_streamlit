@@ -4,19 +4,21 @@ import wikipedia
 import datetime
 import webbrowser
 from gtts import gTTS
+import tempfile
 import os
 
 def speak(text):
-    from gtts import gTTS
+    """Convert text to speech and play the audio."""
     tts = gTTS(text=text, lang="en")
-    
-    # Save the file in a writable directory
-    file_path = os.path.join(os.getcwd(), "temp_output.mp3")
+
+    # Save in a temp directory
+    temp_dir = tempfile.gettempdir()
+    file_path = os.path.join(temp_dir, "output.mp3")
     tts.save(file_path)
 
-    # Play the audio
-    os.system(f"start {file_path}")  # Windows
-
+    # Streamlit does not support os.system for playing audio,
+    # Instead, use Streamlit's built-in audio player
+    st.audio(file_path, format="audio/mp3")
 
 st.title("Virtual Assistant")
 
@@ -38,7 +40,7 @@ elif option == "Search Wikipedia":
             summary = wikipedia.summary(query, sentences=2)
             st.write(summary)
             speak(summary)
-        except wikipedia.exceptions.DisambiguationError as e:
+        except wikipedia.exceptions.DisambiguationError:
             st.write("Multiple results found. Please be more specific.")
         except wikipedia.exceptions.PageError:
             st.write("No results found.")
@@ -51,35 +53,3 @@ elif option == "Get Time":
 elif option == "Play a Video":
     st.write("Opening YouTube...")
     webbrowser.open("https://www.youtube.com/")
-    import tempfile
-
-def speak(text):
-    from gtts import gTTS
-    import os
-
-    tts = gTTS(text=text, lang="en")
-
-    # Save in a temp directory
-    temp_dir = tempfile.gettempdir()
-    file_path = os.path.join(temp_dir, "output.mp3")
-    tts.save(file_path)
-
-    # Play the audio
-    os.system(f"start {file_path}")  # Windows
-    import tempfile
-
-def speak(text):
-    from gtts import gTTS
-    import os
-
-    tts = gTTS(text=text, lang="en")
-
-    # Save in a temp directory
-    temp_dir = tempfile.gettempdir()
-    file_path = os.path.join(temp_dir, "output.mp3")
-    tts.save(file_path)
-
-    # Play the audio
-    os.system(f"start {file_path}")  # Windows
-
-
