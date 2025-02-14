@@ -1,7 +1,16 @@
-streamlit
-SpeechRecognition
-pyttsx3
-pywhatkit
-wikipedia
-pyjokes
+# streamlit
+# SpeechRecognition
+# pyttsx3
+# pywhatkit
+# wikipedia
+# pyjokes
+# pygame
+
+
+streamlit 
+speechrecognition 
+pyttsx3 
+wikipedia 
+pyjokes 
 pygame
+gtts
