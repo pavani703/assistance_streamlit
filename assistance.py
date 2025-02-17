@@ -6,6 +6,7 @@ import webbrowser
 from gtts import gTTS
 import tempfile
 import os
+import pytz
 
 def text_to_speech(text):
     """Convert text to speech and play the audio."""
@@ -37,6 +38,7 @@ def search_wikipedia():
             st.write("No results found.")
 
 def get_time():
+    ist = pytz.timezone('Asia/Kolkata')
     current_time = datetime.datetime.now().strftime("%H:%M:%S")
     st.write(f"Current time: {current_time}")
     text_to_speech(f"The time is {current_time}")
