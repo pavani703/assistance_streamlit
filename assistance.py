@@ -50,7 +50,7 @@ def play_video():
 
 
 # Streamlit UI
-st.title("Virtual Assistant 🤖")
+st.title("Virtual Assistant ")
 
 options = {
     "Tell a Joke": tell_joke,
