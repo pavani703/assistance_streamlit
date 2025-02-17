@@ -7,49 +7,54 @@ from gtts import gTTS
 import tempfile
 import os
 
-def speak(text):
+def text_to_speech(text):
     """Convert text to speech and play the audio."""
     tts = gTTS(text=text, lang="en")
+    temp_file = os.path.join(tempfile.gettempdir(), "speech.mp3")
+    tts.save(temp_file)
+    st.audio(temp_file, format="audio/mp3")
 
-    # Save in a temp directory
-    temp_dir = tempfile.gettempdir()
-    file_path = os.path.join(temp_dir, "output.mp3")
-    tts.save(file_path)
-
-    # Streamlit does not support os.system for playing audio,
-    # Instead, use Streamlit's built-in audio player
-    st.audio(file_path, format="audio/mp3")
-
-st.title("Virtual Assistant")
-
-option = st.selectbox("Choose an option:", ["Tell a Joke", "Play Music", "Search Wikipedia", "Get Time", "Play a Video"])
-
-if option == "Tell a Joke":
+def tell_joke():
     joke = pyjokes.get_joke()
     st.write(joke)
-    speak(joke)
+    text_to_speech(joke)
 
-elif option == "Play Music":
-    st.write("Opening a music video...")
-    webbrowser.open("https://www.youtube.com/results?search_query=relaxing+music")
+def play_music():
+    url = "https://www.youtube.com/results?search_query=relaxing+music"
+    st.write("Opening music...")
+    webbrowser.open(url)
 
-elif option == "Search Wikipedia":
+def search_wikipedia():
     query = st.text_input("Enter a topic to search on Wikipedia:")
     if query:
         try:
             summary = wikipedia.summary(query, sentences=2)
             st.write(summary)
-            speak(summary)
+            text_to_speech(summary)
         except wikipedia.exceptions.DisambiguationError:
             st.write("Multiple results found. Please be more specific.")
         except wikipedia.exceptions.PageError:
             st.write("No results found.")
 
-elif option == "Get Time":
+def get_time():
     current_time = datetime.datetime.now().strftime("%H:%M:%S")
     st.write(f"Current time: {current_time}")
-    speak(f"The time is {current_time}")
+    text_to_speech(f"The time is {current_time}")
 
-elif option == "Play a Video":
+def play_video():
     st.write("Opening YouTube...")
     webbrowser.open("https://www.youtube.com/")
+
+# Streamlit UI
+st.title("Virtual Assistant")
+
+options = {
+    "Tell a Joke": tell_joke,
+    "Play Music": play_music,
+    "Search Wikipedia": search_wikipedia,
+    "Get Time": get_time,
+    "Play a Video": play_video,
+}
+
+choice = st.selectbox("Choose an option:", list(options.keys()))
+options[choice]()
