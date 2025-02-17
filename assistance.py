@@ -39,7 +39,7 @@ def search_wikipedia():
 
 def get_time():
     ist = pytz.timezone('Asia/Kolkata')
-    current_time = datetime.datetime.now().strftime("%H:%M:%S")
+    current_time = datetime.datetime.now(ist).strftime("%H:%M:%S")
     st.write(f"Current time: {current_time}")
     text_to_speech(f"The time is {current_time}")
 
