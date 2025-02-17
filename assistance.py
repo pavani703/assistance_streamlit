@@ -21,9 +21,9 @@ def tell_joke():
     text_to_speech(joke)
 
 def play_music():
+    """Provide a clickable link to open YouTube music search."""
     url = "https://www.youtube.com/results?search_query=relaxing+music"
-    st.write("Opening music...")
-    webbrowser.open(url)
+    st.markdown(f"[Click here to play relaxing music 🎵]({url})")
 
 def search_wikipedia():
     query = st.text_input("Enter a topic to search on Wikipedia:")
@@ -44,11 +44,13 @@ def get_time():
     text_to_speech(f"The time is {current_time}")
 
 def play_video():
-    st.write("Opening YouTube...")
-    webbrowser.open("https://www.youtube.com/")
+    """Provide a clickable link to open YouTube."""
+    url = "https://www.youtube.com/"
+    st.markdown(f"[Click here to open YouTube ▶]({url})")
+
 
 # Streamlit UI
-st.title("Virtual Assistant")
+st.title("Virtual Assistant 🤖")
 
 options = {
     "Tell a Joke": tell_joke,
